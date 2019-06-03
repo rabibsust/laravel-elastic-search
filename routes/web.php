@@ -1,5 +1,6 @@
 <?php
 use App\Article;
+use App\Articles\ArticlesRepository;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +16,13 @@ use App\Article;
 Route::get('/', function () {
     return view('articles.index', [
         'articles' => Article::all(),
+    ]);
+});
+
+Route::get('/search', function (ArticlesRepository $repository) {
+    $articles = $repository->search((string)request('q'));
+
+    return view('articles.index', [
+        'articles' => $articles,
     ]);
 });
